@@ -1,16 +1,8 @@
 {
-    "db_host": "localhost",
-    "db_port": "5432",
-    "db_name": "postgresoptimism",
-    "db_user": "postgres",
-    "db_password": "godfrey_karis"
+     "db_host": "DB_HOST",
+     "db_port": "PORT",
+     "db_name": "DB_NAME",
+     "db_user": "DB_USERNAME",
+     "db_password": "PASSWORD"
   }
-
-  // {
-  //   "db_host": "DB_HOST",
-  //   "db_port": "PORT",
-  //   "db_name": "DB_NAME",
-  //   "db_user": "DB_USERNAME",
-  //   "db_password": "PASSWORD"
-  // }
   
