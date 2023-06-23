@@ -9,7 +9,10 @@ from modules.web3_iniitialization import Web3Initializer
 from modules.contracts_handler import ContractsHandler
 
 from modules.store_event_data import EventDataStore
+
+from modules.store_view import ViewDataStore
 from modules.get_view import ViewExtracter
+
 
 #Initialize Web3
 web3_initializer = Web3Initializer("https://mainnet.infura.io/v3/c801c82431594bf1935b736f68d13c08")
@@ -23,23 +26,24 @@ database_initializer = DatabaseInitializer("config.json")
 #Prepare to store event logs to the database
 event_data_store = EventDataStore(database_object=database_initializer)
 
+#Prepare to store views
+view_data_store = ViewDataStore(database_object=database_initializer)
+
 #Prepare the object that facilitates the retieval of a view from the contract
 view_getter = ViewExtracter()
   
 
 # Processing the event logs
-event_data_store.process_events(contracts_handler=contracts_handler,database_initializer=database_initializer,web3_initializer=web3_initializer,event_data_store=event_data_store)
+# event_data_store.process_events(contracts_handler=contracts_handler,database_initializer=database_initializer,web3_initializer=web3_initializer)
     
 """-----------------Working with views---------------------"""
 # Get the contracts from the database
-# contracts = contracts_handler.get_contracts(database_object=database_initializer) 
+contracts = contracts_handler.get_contracts(database_object=database_initializer) 
 
-# contract_data = contracts[0]
-
-# contract = contracts_handler.initialize_contract(contract_data['contract_address'], contract_data['contract_abi'])
+contract_data = contracts[0]
 
 # The user chooses the function they want to call and the result(view) is printed
-# view_getter.print_chosen_view(web3_initializer.web3, contract)
+view_data_store.process_view(contract_data, contracts_handler, database_initializer, web3_initializer, view_getter)
 
 """--------------------------------------------------------------------------------"""
 

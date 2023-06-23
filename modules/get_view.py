@@ -80,17 +80,21 @@ class ViewExtracter:
             print()
             return "Error"
     
-    def print_chosen_view(self, web3, contract):    
+    def perform_view_function_call(self, web3, contract):    
         # Get the list of view functions (constant functions)
         view_functions = [fn for fn in contract.abi if fn['type'] == 'function' and fn['stateMutability'] == 'view']
 
+        print()
+        print("These are the available view functions. Choose One.")
+        print()
         # Loop through each view function and get its data
         counter = 1
-        
+                
         for function in view_functions:
             print('{}'.format(counter) + ": " + function['name'])
             counter = counter + 1
         
+        print()
         # Get user input
         choice = int(input("Enter the number corresponding to the function you choose: "))
         
@@ -102,9 +106,15 @@ class ViewExtracter:
             result = self.get_view(web3, contract, function_name)
             
             if(result != "Error"):
-                print("Output for " + function_name + ": " + '{}'.format(result))
-                print()
+                json_data = {}
+                json_data["function_name"] = function_name 
+                json_data["result"] = result
+                
+                return json_data
             else:
-                print("An error occurred!")
-                print("Please ensure you have the correct arguments for the " + function_name + " function.")
+                json_data = {}
+                json_data["Status"] = "An error occurred!"
+                json_data["Error"] = "Please ensure you have the correct arguments for the " + function_name + " function."
+                
+                return json_data
                 
