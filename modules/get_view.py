@@ -1,15 +1,16 @@
 
 class ViewExtracter:
-    def get_view(self, contract, function_name):
+    def get_view(self, web3, contract, function_name):
            
         # Check if the function has inputs/arguments
         function_abi = next((item for item in contract.abi if item["name"] == function_name), None)
-        
-        print() #New line
-            
+                    
         if "inputs" in function_abi:
             inputs = function_abi["inputs"]
-            print(f"Function '{function_name}' requires {len(inputs)} argument(s):")
+            
+            if len(inputs) > 0:
+                print()
+                print(f"Function '{function_name}' requires {len(inputs)} argument(s):")
 
             user_inputs = []
             for arg in inputs:
@@ -32,6 +33,7 @@ class ViewExtracter:
                     if address_input.startswith("0x") and len(address_input) == 42:
                         # Remove the "0x" prefix and convert to lowercase
                         address = address_input[2:].lower()
+                        address =  web3.to_checksum_address(address)
                     else:
                         print("Invalid Ethereum address format!")
                         exit()
@@ -68,7 +70,7 @@ class ViewExtracter:
              
         try:
             if len(user_inputs) > 0 :
-                result = contract.functions[function_name]().call(*user_inputs)
+                result = contract.functions[function_name](user_inputs[0]).call()
             else:
                 result = contract.functions[function_name]().call()
                 
@@ -76,9 +78,9 @@ class ViewExtracter:
         except Exception as e:
             print(f"Error retrieving data for function '{function_name}': {str(e)}")
             print()
-            return 0
+            return "Error"
     
-    def print_chosen_view(self, contract):    
+    def print_chosen_view(self, web3, contract):    
         # Get the list of view functions (constant functions)
         view_functions = [fn for fn in contract.abi if fn['type'] == 'function' and fn['stateMutability'] == 'view']
 
@@ -97,10 +99,12 @@ class ViewExtracter:
         else:          
             function_name = view_functions[choice - 1]['name']    
 
-            result = self.get_view(contract, function_name)
+            result = self.get_view(web3, contract, function_name)
             
-            if(result != 0):
-                print(function_name + " Output: " + '{}'.format(result))
+            if(result != "Error"):
+                print("Output for " + function_name + ": " + '{}'.format(result))
                 print()
             else:
-                print("An error occurred")
+                print("An error occurred!")
+                print("Please ensure you have the correct arguments for the " + function_name + " function.")
+                

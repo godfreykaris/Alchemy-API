@@ -31,12 +31,12 @@ class ContractsHandler:
         
         return contracts
 
-    def create_contract_events_table(self, database_object, contract_id):
+    def create_contract_events_table(self, database_object, contract_address):
         #Get the database connection
         database_connection = database_object.get_database_connection()
         
         cursor = database_connection.cursor(cursor_factory=RealDictCursor)
-        query = "CREATE TABLE IF NOT EXISTS contract_" + contract_id + "_events ( id SERIAL PRIMARY KEY, event_name VARCHAR(255) NOT NULL, transaction_hash VARCHAR(255) NOT NULL,    event_data JSON,    timestamp TIMESTAMP DEFAULT NOW());"
+        query = "CREATE TABLE IF NOT EXISTS contract_" + contract_address + "_events ( id SERIAL PRIMARY KEY, event_name VARCHAR(255) NOT NULL, transaction_hash VARCHAR(255) NOT NULL,    event_data JSON,    timestamp TIMESTAMP DEFAULT NOW());"
         cursor.execute(query)
 
         database_connection.commit()

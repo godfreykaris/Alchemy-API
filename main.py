@@ -28,18 +28,18 @@ view_getter = ViewExtracter()
   
 
 # Processing the event logs
-# event_data_store.process_events(contracts_handler=contracts_handler,database_initializer=database_initializer,web3_initializer=web3_initializer,event_data_store=event_data_store)
+event_data_store.process_events(contracts_handler=contracts_handler,database_initializer=database_initializer,web3_initializer=web3_initializer,event_data_store=event_data_store)
     
 """-----------------Working with views---------------------"""
 # Get the contracts from the database
-contracts = contracts_handler.get_contracts(database_object=database_initializer) 
+# contracts = contracts_handler.get_contracts(database_object=database_initializer) 
 
-contract_data = contracts[0]
+# contract_data = contracts[0]
 
-contract = contracts_handler.initialize_contract(contract_data['contract_address'], contract_data['contract_abi'])
+# contract = contracts_handler.initialize_contract(contract_data['contract_address'], contract_data['contract_abi'])
 
 # The user chooses the function they want to call and the result(view) is printed
-view_getter.print_chosen_view(contract)
+# view_getter.print_chosen_view(web3_initializer.web3, contract)
 
 """--------------------------------------------------------------------------------"""
 

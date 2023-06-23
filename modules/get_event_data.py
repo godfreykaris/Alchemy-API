@@ -21,12 +21,30 @@ class EventDataExtracter:
         
         return event_logs
     
-    def event_log_to_json(self, event_log):
-        if isinstance(event_log, dict):
-            return {k: self.event_log_to_json(v) for k, v in event_log.items()}
-        elif isinstance(event_log, (list, tuple)):
-            return [self.event_log_to_json(item) for item in event_log]
+    # Convert AttribDict to Dict
+    def attrib_dict_to_dict(self, attribdict):        
+        parsed_dict = dict(attribdict)
+        for key, val in parsed_dict.items():
+            if 'list' in str(type(val)):
+                parsed_dict[key] = [self.parse_dict_key_value(x) for x in val]
+            else:
+                parsed_dict[key] = self.parse_dict_key_value(val)
+        return parsed_dict
+    
+    # Check for nested dict structures to iterate through
+    def parse_dict_key_value(self, val):
+        if 'dict' in str(type(val)).lower():
+            return self.attrib_dict_to_dict(val)
+        #convert 'HexBytes' type to 'str'
+        elif 'HexBytes' in str(type(val)):
+            return val.hex()
         else:
-            return event_log
+            return val
+    
+    def event_log_to_json(self, event_log):
+        json_data = json.dumps(self.attrib_dict_to_dict(event_log))
+        json_object = json.loads(json_data)
+        
+        return json_object
 
         
