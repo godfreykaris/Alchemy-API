@@ -70,7 +70,7 @@ class ViewExtracter:
              
         try:
             if len(user_inputs) > 0 :
-                result = contract.functions[function_name](user_inputs[0]).call()
+                result = contract.functions[function_name](*user_inputs).call()
             else:
                 result = contract.functions[function_name]().call()
                 
