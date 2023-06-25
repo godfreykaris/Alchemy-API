@@ -4,9 +4,9 @@ Database Installation
   2.	Here is a step by step guide: https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database
   3.	Look for pgAdmin and launch it.
   4.	pgAdmin location:<br/>
-      -	Linux: On Linux pgAdmin is available under Programming in the Applications menu
-      -	Mac: On a Mac it is available in the Applications folder as an application
-      -	Windows: On Windows it is available under Program Files
+      -	Linux: On Linux pgAdmin is available under Programming in the Applications menu<br/>
+      -	Mac: On a Mac it is available in the Applications folder as an application<br/>
+      -	Windows: On Windows it is available under Program Files<br/>
 
 Create a database
   1.	In pgAdmin, right-click the Databases node and select Create > Database… menu item
@@ -19,9 +19,9 @@ Create the contracts table:
   1.	Go to "tables" in pgAdmin window in the database you created, right click on "tables" and click on "New Table".
   2.	This will open a new window to create a New Table. Supply “contracts” as the name of your new table and then click on Columns
   3.	Now in the columns window, add the following columns using the given data types:<br/>
-      -	id: integer notNull Primary Key
-      -	contract_address: VARCHAR 255
-      -	contract_abi: json
+      -	id: integer notNull Primary Key<br/>
+      -	contract_address: VARCHAR 255<br/>
+      -	contract_abi: json<br/>
 Add the test contract:
   1.	Right-click on your table –> select View/Edit Data –> All Rows
   2.	Add new row 
@@ -33,13 +33,13 @@ Cloning the repository
   1.	Clone the repository to your local machine.
   2.	Install Python
   3.	Install the following packages using pip:
-    -	web3
-    -	pyscopg2
-    -	sqlalcemy
-    -	json
-    -	fastapi
-    -	json
-    -	attributeddict
+    -	web3<br/>
+    -	pyscopg2<br/>
+    -	sqlalcemy<br/>
+    -	json<br/>
+    -	fastapi<br/>
+    -	json<br/>
+    -	attributeddict<br/>
 
 
 
