@@ -16,6 +16,10 @@ from modules.get_view import ViewExtracter
 from modules.access_events import EventsAccessor
 from modules.access_views import ViewAccessor
 
+app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
+
 #Initialize Web3
 web3_initializer = Web3Initializer("https://mainnet.infura.io/v3/c801c82431594bf1935b736f68d13c08")
 
@@ -60,7 +64,12 @@ contract_data = contracts[0] # We use the first contract for testing
 
 # Access the views
 # All views
-views_accessor.access_views(contract_address=contract_data['contract_address'])
+@app.get("/", response_class=HTMLResponse)
+def access_view_endpoint(request: Request):
+    views = views_accessor.access_views(contract_address="0xdAC17F958D2ee523a2206206994597C13D831ec7")
+    context = {"request": request, "views": views}
+    return templates.TemplateResponse("index.html", context)
+    
 
 # Only views for name view function
 #views_accessor.access_views(contract_address=contract_data['contract_address'], function_name="name")
